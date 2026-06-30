@@ -1,13 +1,554 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webify - AI Web Design</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webify - AI-Powered Web Design for Local Businesses</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              900: '#0a0a0f',
+              800: '#12121a',
+              700: '#1a1a25',
+              600: '#252532',
+            },
+            neon: {
+              purple: '#a855f7',
+              pink: '#ec4899',
+              cyan: '#06b6d4',
+            }
+          },
+          animation: {
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)' },
+              '100%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(168, 85, 247, 0.4)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #0a0a0f; color: white; font-family: system-ui, -apple-system, sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(to right, #a855f7, #ec4899, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-shadow-glow { text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+
+    .btn-primary {
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      background: linear-gradient(to right, #a855f7, #ec4899);
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      border: 2px solid rgba(168, 85, 247, 0.5);
+      color: #a855f7;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: #a855f7;
+    }
+
+    .card {
+      background: #12121a;
+      border-radius: 1rem;
+      border: 1px solid #252532;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(168, 85, 247, 0.5);
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.1);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #1a1a25;
+      border: 1px solid #252532;
+      border-radius: 0.5rem;
+      color: white;
+      transition: all 0.3s;
+    }
+    .input-field::placeholder { color: #6b7280; }
+    .input-field:focus {
+      outline: none;
+      border-color: #a855f7;
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+    }
+
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .animate-float { animation: float-y 6s ease-in-out infinite; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin { animation: spin 1s linear infinite; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) translateX(-50%); }
+      50% { transform: translateY(-10px) translateX(-50%); }
+    }
+    .animate-bounce { animation: bounce 1s infinite; }
+  </style>
 </head>
-<body>
-    <h1>Webify Ismini Seçtiğin Web Sitesi Şu An Canlıda!</h1>
-    <p>Yakında yapay zeka ile harika tasarımlar burada olacak.</p>
+<body class="antialiased overflow-x-hidden">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-xl border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <a href="#" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i data-lucide="globe" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="text-xl font-bold gradient-text">Webify</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#services" class="text-gray-300 hover:text-neon-purple transition-colors duration-300">Services</a>
+          <a href="#portfolio" class="text-gray-300 hover:text-neon-purple transition-colors duration-300">Portfolio</a>
+          <a href="#contact" class="text-gray-300 hover:text-neon-purple transition-colors duration-300">Contact</a>
+          <a href="#contact" class="btn-primary text-sm">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            Get Started
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="md:hidden p-2 text-gray-300 hover:text-white">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileMenu" class="hidden md:hidden bg-dark-800 border-t border-dark-700">
+      <div class="px-4 py-6 space-y-4">
+        <a href="#services" class="block text-gray-300 hover:text-neon-purple transition-colors">Services</a>
+        <a href="#portfolio" class="block text-gray-300 hover:text-neon-purple transition-colors">Portfolio</a>
+        <a href="#contact" class="block text-gray-300 hover:text-neon-purple transition-colors">Contact</a>
+        <a href="#contact" class="btn-primary inline-flex text-sm">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+          Get Started
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center pt-16 lg:pt-20">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-pink/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl animate-float" style="animation-delay: 4s;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-800 border border-dark-600 mb-8">
+        <i data-lucide="sparkles" class="w-4 h-4 text-neon-purple"></i>
+        <span class="text-sm text-gray-300">AI-Powered Web Design</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+        <span class="block text-white">Websites That</span>
+        <span class="block gradient-text text-shadow-glow">Work For You</span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10">
+        Transform your local business with stunning, AI-powered websites. From restaurants to
+        retail, we craft digital experiences that turn visitors into customers.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#contact" class="btn-primary w-full sm:w-auto justify-center">
+          Get in Touch
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <a href="#portfolio" class="btn-outline w-full sm:w-auto justify-center">
+          View Our Work
+        </a>
+      </div>
+
+      <div class="mt-16 flex items-center justify-center gap-8 text-gray-500">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">50+</div>
+          <div class="text-sm">Projects</div>
+        </div>
+        <div class="w-px h-12 bg-dark-600"></div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">98%</div>
+          <div class="text-sm">Satisfaction</div>
+        </div>
+        <div class="w-px h-12 bg-dark-600"></div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">24h</div>
+          <div class="text-sm">Turnaround</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 animate-bounce">
+      <div class="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-1">
+        <div class="w-1.5 h-3 rounded-full bg-neon-purple"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 px-4 md:px-8 lg:px-16 bg-dark-800/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-2 rounded-full bg-neon-purple/10 text-neon-purple text-sm font-medium mb-4">
+          What We Do
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Our Services</h2>
+        <p class="max-w-2xl mx-auto text-gray-400">
+          We specialize in bringing local businesses online with stunning, functional websites
+          that drive results.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- AI Web Design -->
+        <div class="card p-8 group hover:-translate-y-2 transition-all duration-500">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-pink/20 flex items-center justify-center text-neon-purple mb-6 group-hover:scale-110 transition-transform duration-300">
+            <i data-lucide="sparkles" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">AI Web Design</h3>
+          <p class="text-gray-400 mb-6">
+            Leverage cutting-edge AI to create stunning, conversion-optimized websites tailored to your business needs.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              Custom AI-generated designs
+            </li>
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              SEO-optimized structure
+            </li>
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              Mobile-first approach
+            </li>
+          </ul>
+        </div>
+
+        <!-- Website Update -->
+        <div class="card p-8 group hover:-translate-y-2 transition-all duration-500">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-pink/20 flex items-center justify-center text-neon-purple mb-6 group-hover:scale-110 transition-transform duration-300">
+            <i data-lucide="refresh-cw" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Website Update</h3>
+          <p class="text-gray-400 mb-6">
+            Modernize your existing website with fresh designs, improved performance, and new features.
+          </p>
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              Performance optimization
+            </li>
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              UI/UX refresh
+            </li>
+            <li class="flex items-center gap-3 text-gray-300">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-neon-purple flex-shrink-0"></i>
+              Content management
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-20 px-4 md:px-8 lg:px-16">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-2 rounded-full bg-neon-pink/10 text-neon-pink text-sm font-medium mb-4">
+          Our Work
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Featured Projects</h2>
+        <p class="max-w-2xl mx-auto text-gray-400">
+          See how we've helped local businesses transform their digital presence.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6 lg:gap-8">
+        <!-- Project 1 -->
+        <div class="card overflow-hidden group cursor-pointer">
+          <div class="relative h-56 sm:h-64 overflow-hidden">
+            <img src="https://images.pexels.com/photos/674683/pexels-photo-674683.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bella Cucina" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+            <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-dark-900/80 backdrop-blur-sm text-sm text-gray-300 flex items-center gap-2">
+              <i data-lucide="utensils-crossed" class="w-4 h-4"></i>
+              Restaurant
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-purple transition-colors duration-300">Bella Cucina</h3>
+            <p class="text-gray-400">Italian fine dining website with online reservations</p>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="card overflow-hidden group cursor-pointer">
+          <div class="relative h-56 sm:h-64 overflow-hidden">
+            <img src="https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Urban Threads" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+            <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-dark-900/80 backdrop-blur-sm text-sm text-gray-300 flex items-center gap-2">
+              <i data-lucide="scissors" class="w-4 h-4"></i>
+              Fashion Boutique
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-purple transition-colors duration-300">Urban Threads</h3>
+            <p class="text-gray-400">E-commerce platform for local fashion retailer</p>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="card overflow-hidden group cursor-pointer">
+          <div class="relative h-56 sm:h-64 overflow-hidden">
+            <img src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cozy Corner Cafe" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+            <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-dark-900/80 backdrop-blur-sm text-sm text-gray-300 flex items-center gap-2">
+              <i data-lucide="coffee" class="w-4 h-4"></i>
+              Coffee Shop
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-purple transition-colors duration-300">Cozy Corner Cafe</h3>
+            <p class="text-gray-400">Menu showcase with online ordering integration</p>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="card overflow-hidden group cursor-pointer">
+          <div class="relative h-56 sm:h-64 overflow-hidden">
+            <img src="https://images.pexels.com/photos/4319830/pexels-photo-4319830.jpeg?auto=compress&cs=tinysrgb&w=600" alt="QuickFix Auto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+            <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-dark-900/80 backdrop-blur-sm text-sm text-gray-300 flex items-center gap-2">
+              <i data-lucide="store" class="w-4 h-4"></i>
+              Auto Repair
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-purple transition-colors duration-300">QuickFix Auto</h3>
+            <p class="text-gray-400">Appointment booking and service showcase</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="#contact" class="btn-outline">
+          Start Your Project
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 md:px-8 lg:px-16 bg-dark-800/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <span class="inline-block px-4 py-2 rounded-full bg-neon-cyan/10 text-neon-cyan text-sm font-medium mb-4">
+            Contact Us
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+            Let's Build Something <span class="gradient-text">Amazing</span>
+          </h2>
+          <p class="text-gray-400 mb-8">
+            Ready to transform your business with a stunning website? Get in touch and let's
+            discuss how AI-powered design can help you attract more customers.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-dark-700 flex items-center justify-center text-neon-purple">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Email us</div>
+                <div class="text-white font-medium">hello@webify.design</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-dark-700 flex items-center justify-center text-neon-purple">
+                <i data-lucide="zap" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Response time</div>
+                <div class="text-white font-medium">Within 24 hours</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 mt-10">
+            <a href="#" class="w-10 h-10 rounded-lg bg-dark-700 flex items-center justify-center text-gray-400 hover:text-neon-purple hover:bg-dark-600 transition-all duration-300">
+              <i data-lucide="twitter" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-lg bg-dark-700 flex items-center justify-center text-gray-400 hover:text-neon-purple hover:bg-dark-600 transition-all duration-300">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-lg bg-dark-700 flex items-center justify-center text-gray-400 hover:text-neon-purple hover:bg-dark-600 transition-all duration-300">
+              <i data-lucide="github" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card p-6 sm:p-8">
+          <div id="formContainer">
+            <form id="contactForm" class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Your Email</label>
+                <input type="email" id="email" placeholder="your@email.com" class="input-field" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Your Message</label>
+                <textarea id="message" placeholder="Tell us about your project..." rows="5" class="input-field resize-none" required></textarea>
+              </div>
+              <button type="submit" id="submitBtn" class="btn-primary w-full justify-center">
+                Send Message
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+          <div id="successMessage" class="hidden text-center py-12">
+            <div class="w-16 h-16 rounded-full bg-neon-purple/20 flex items-center justify-center mx-auto mb-4">
+              <i data-lucide="check-circle-2" class="w-8 h-8 text-neon-purple"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Message Sent!</h3>
+            <p class="text-gray-400">We'll get back to you within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 px-4 border-t border-dark-700">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center">
+          <i data-lucide="globe" class="w-4 h-4 text-white"></i>
+        </div>
+        <span class="font-bold text-white">Webify</span>
+      </div>
+      <p class="text-gray-500 text-sm"><span id="year"></span> Webify. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Set current year
+    document.getElementById('year').textContent = '© ' + new Date().getFullYear();
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      if (mobileMenu.classList.contains('hidden')) {
+        icon.setAttribute('data-lucide', 'menu');
+      } else {
+        icon.setAttribute('data-lucide', 'x');
+      }
+      lucide.createIcons();
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.querySelector('i').setAttribute('data-lucide', 'menu');
+        lucide.createIcons();
+      });
+    });
+
+    // Form submission
+    const form = document.getElementById('contactForm');
+    const formContainer = document.getElementById('formContainer');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const originalContent = submitBtn.innerHTML;
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+        Sending...
+      `;
+
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Show success message
+      formContainer.classList.add('hidden');
+      successMessage.classList.remove('hidden');
+
+      // Reset form
+      form.reset();
+      submitBtn.innerHTML = originalContent;
+      submitBtn.disabled = false;
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+      }, 5000);
+    });
+  </script>
 </body>
 </html>
